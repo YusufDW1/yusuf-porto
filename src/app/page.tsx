@@ -1,7 +1,8 @@
 import Navbar from '../components/Navbar';
 import PixelAvatar from '../components/PixelAvatar';
-import PixelScene from '../components/PixelScene';
-import PixelIcon from '../components/PixelIcon';
+import { SiUnity, SiReact } from 'react-icons/si';
+import { FaGraduationCap, FaMapMarkerAlt, FaPhone, FaEnvelope, FaCode, FaLinkedin, FaGithub } from 'react-icons/fa';
+import { TbBrandCSharp } from 'react-icons/tb';
 import ContactForm from '../components/ContactForm';
 import FloatingPixels from '../components/FloatingPixels';
 import RoleTyper from '../components/RoleTyper';
@@ -21,7 +22,7 @@ const PROJECTS = [
     ],
     techs: ['Unity', 'C#', 'Aseprite'],
     color: 'var(--accent-green)',
-    icon: 'unity',
+    Icon: SiUnity,
   },
   {
     title: 'AMBALEARN',
@@ -35,7 +36,7 @@ const PROJECTS = [
     ],
     techs: ['React', 'Next.js', 'CSS'],
     color: 'var(--accent-blue)',
-    icon: 'react',
+    Icon: SiReact,
   },
   {
     title: 'PIXEL WEBSITES',
@@ -49,7 +50,7 @@ const PROJECTS = [
     ],
     techs: ['React', 'Next.js', 'CSS'],
     color: 'var(--accent-blue)',
-    icon: 'react',
+    Icon: SiReact,
   },
   {
     title: 'GAME DEV TOOLKIT',
@@ -63,7 +64,7 @@ const PROJECTS = [
     ],
     techs: ['Unity', 'C#', 'React'],
     color: 'var(--accent-gold)',
-    icon: 'csharp',
+    Icon: TbBrandCSharp,
   },
 ];
 
@@ -72,24 +73,16 @@ const EDUCATION = [
     institution: 'Universitas Harkat Negeri',
     degree: 'Sarjana Terapan Teknik Informatika (D4)',
     period: '2023 — Sekarang',
-    gpa: 'IPK / GPA: [Masukkan IPK Anda, misal: 3.80]',
-    icon: 'about',
+    gpa: 'IPK : 3.54 / 4',
+    Icon: FaGraduationCap,
   }
 ];
 
-const SKILLS = [
-  { name: 'HTML5', icon: 'html' },
-  { name: 'CSS3', icon: 'css' },
-  { name: 'JavaScript', icon: 'js' },
-  { name: 'React', icon: 'react' },
-  { name: 'Unity', icon: 'unity' },
-  { name: 'C#', icon: 'csharp' },
-  { name: 'Aseprite', icon: 'aseprite' },
-];
+
 
 const SOCIAL_LINKS = [
-  { name: 'LinkedIn', icon: 'linkedin', href: 'https://www.linkedin.com/in/yusuf-dwi-saputra-0aa929291', handle: 'Yusuf Dwi Saputra' },
-  { name: 'GitHub', icon: 'github', href: 'https://github.com/YusufDW1', handle: 'YusufDW1' },
+  { name: 'LinkedIn', Icon: FaLinkedin, href: 'https://www.linkedin.com/in/yusuf-dwi-saputra-0aa929291', handle: 'Yusuf Dwi Saputra' },
+  { name: 'GitHub', Icon: FaGithub, href: 'https://github.com/YusufDW1', handle: 'YusufDW1' },
 ];
 
 export default function Home() {
@@ -122,19 +115,19 @@ export default function Home() {
           {/* Quick contact info */}
           <div className={styles.quickInfo}>
             <div className={styles.quickItem}>
-              <PixelIcon name="skills" scale={2} />
+              <FaCode size={20} />
               <span>Frontend & Game Developer</span>
             </div>
             <div className={styles.quickItem}>
-              <PixelIcon name="location" scale={2} />
+              <FaMapMarkerAlt size={20} />
               <span>Tegal, Indonesia</span>
             </div>
             <div className={styles.quickItem}>
-              <PixelIcon name="phone" scale={2} />
+              <FaPhone size={20} />
               <span>+62 821 3656 3381</span>
             </div>
             <div className={styles.quickItem}>
-              <PixelIcon name="email" scale={2} />
+              <FaEnvelope size={20} />
               <span>yusufdwi456@gmail.com</span>
             </div>
           </div>
@@ -149,7 +142,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className={styles.socialBadge}
               >
-                <PixelIcon name={link.icon} scale={3} />
+                <link.Icon size={24} />
                 <div className={styles.socialBadgeText}>
                   <span className={styles.socialBadgeName}>{link.name}</span>
                   <span className={styles.socialBadgeHandle}>{link.handle}</span>
@@ -193,15 +186,7 @@ export default function Home() {
 
         <div className={styles.divider} />
 
-        {/* ═══════ WORKSPACE ═══════ */}
-        <section className={styles.contentSection}>
-          <h2 className={styles.sectionHeading}>Workspace</h2>
-          <div className={`pixel-border ${styles.workspacePanel}`}>
-            <PixelScene />
-          </div>
-        </section>
 
-        <div className={styles.divider} />
 
         {/* ═══════ EDUCATION ═══════ */}
         <section id="education" className={styles.contentSection}>
@@ -212,7 +197,7 @@ export default function Home() {
                 <summary className={styles.dropdownSummary}>
                   <div className={styles.projectHeader} style={{ marginBottom: 0 }}>
                     <div className={styles.projectIcon}>
-                      <PixelIcon name={edu.icon} scale={3} />
+                      <edu.Icon size={24} />
                     </div>
                     <div className={styles.projectMeta}>
                       <h3 className={styles.projectTitle}>{edu.institution}</h3>
@@ -244,7 +229,7 @@ export default function Home() {
                 <summary className={styles.dropdownSummary}>
                   <div className={styles.projectHeader} style={{ marginBottom: 0 }}>
                     <div className={styles.projectIcon}>
-                      <PixelIcon name={project.icon} scale={3} />
+                      <project.Icon size={24} />
                     </div>
                     <div className={styles.projectMeta}>
                       <h3 className={styles.projectTitle}>{project.title}</h3>

@@ -1,30 +1,32 @@
 'use client';
 
 import React from 'react';
-import PixelIcon from './PixelIcon';
+import { SiNextdotjs, SiTailwindcss, SiUnity, SiAseprite, SiFigma } from 'react-icons/si';
+import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaGitAlt } from 'react-icons/fa';
+import { TbBrandCSharp } from 'react-icons/tb';
 import styles from './TechMarquee.module.css';
 
 interface Skill {
   name: string;
-  icon: string;
+  Icon: React.ElementType;
   url: string;
 }
 
 const SKILLS_TOP: Skill[] = [
-  { name: 'HTML5', icon: 'html', url: 'https://developer.mozilla.org/en-US/docs/Web/HTML' },
-  { name: 'CSS3', icon: 'css', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS' },
-  { name: 'JavaScript', icon: 'js', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
-  { name: 'React', icon: 'react', url: 'https://react.dev/' },
-  { name: 'Next.js', icon: 'react', url: 'https://nextjs.org/' }, // We don't have nextjs icon, use react or generic
-  { name: 'Tailwind', icon: 'css', url: 'https://tailwindcss.com/' },
+  { name: 'HTML5', Icon: FaHtml5, url: 'https://developer.mozilla.org/en-US/docs/Web/HTML' },
+  { name: 'CSS3', Icon: FaCss3Alt, url: 'https://developer.mozilla.org/en-US/docs/Web/CSS' },
+  { name: 'JavaScript', Icon: FaJs, url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
+  { name: 'React', Icon: FaReact, url: 'https://react.dev/' },
+  { name: 'Next.js', Icon: SiNextdotjs, url: 'https://nextjs.org/' },
+  { name: 'Tailwind', Icon: SiTailwindcss, url: 'https://tailwindcss.com/' },
 ];
 
 const SKILLS_BOTTOM: Skill[] = [
-  { name: 'Unity', icon: 'unity', url: 'https://unity.com/' },
-  { name: 'C#', icon: 'csharp', url: 'https://docs.microsoft.com/en-us/dotnet/csharp/' },
-  { name: 'Aseprite', icon: 'aseprite', url: 'https://www.aseprite.org/' },
-  { name: 'Git', icon: 'github', url: 'https://git-scm.com/' },
-  { name: 'Figma', icon: 'css', url: 'https://www.figma.com/' },
+  { name: 'Unity', Icon: SiUnity, url: 'https://unity.com/' },
+  { name: 'C#', Icon: TbBrandCSharp, url: 'https://docs.microsoft.com/en-us/dotnet/csharp/' },
+  { name: 'Aseprite', Icon: SiAseprite, url: 'https://www.aseprite.org/' },
+  { name: 'Git', Icon: FaGitAlt, url: 'https://git-scm.com/' },
+  { name: 'Figma', Icon: SiFigma, url: 'https://www.figma.com/' },
 ];
 
 export default function TechMarquee() {
@@ -36,7 +38,7 @@ export default function TechMarquee() {
           {/* Duplicate content for seamless looping */}
           {[...SKILLS_TOP, ...SKILLS_TOP, ...SKILLS_TOP].map((skill, i) => (
             <a key={i} href={skill.url} target="_blank" rel="noopener noreferrer" className={styles.skillLink} title={skill.name}>
-              <PixelIcon name={skill.icon} scale={5} />
+              <skill.Icon size={40} className={styles.svgIcon} />
             </a>
           ))}
         </div>
@@ -48,7 +50,7 @@ export default function TechMarquee() {
           {/* Duplicate content for seamless looping */}
           {[...SKILLS_BOTTOM, ...SKILLS_BOTTOM, ...SKILLS_BOTTOM].map((skill, i) => (
             <a key={i} href={skill.url} target="_blank" rel="noopener noreferrer" className={styles.skillLink} title={skill.name}>
-              <PixelIcon name={skill.icon} scale={5} />
+              <skill.Icon size={40} className={styles.svgIcon} />
             </a>
           ))}
         </div>

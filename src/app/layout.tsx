@@ -1,19 +1,19 @@
 import type { Metadata } from 'next';
-import { Press_Start_2P, VT323 } from 'next/font/google';
+import { Chakra_Petch, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '../components/ThemeProvider';
 
-const pressStart = Press_Start_2P({
-  weight: '400',
+const chakraPetch = Chakra_Petch({
+  weight: ['400', '600', '700'],
   subsets: ['latin'],
-  variable: '--font-press-start',
+  variable: '--font-heading',
   display: 'swap',
 });
 
-const vt323 = VT323({
-  weight: '400',
+const jetbrainsMono = JetBrains_Mono({
+  weight: ['400', '500', '700'],
   subsets: ['latin'],
-  variable: '--font-vt323',
+  variable: '--font-body',
   display: 'swap',
 });
 
@@ -29,7 +29,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${pressStart.variable} ${vt323.variable}`} suppressHydrationWarning>
+      <body className={`${chakraPetch.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
         <ThemeProvider>
           {children}
         </ThemeProvider>

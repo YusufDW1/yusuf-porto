@@ -97,3 +97,14 @@
 .marqueeRow:hover .marqueeTrack {
   animation-play-state: paused;
 }
+
+.svgIcon {
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+  filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.2));
+}
+
+.skillLink:hover .svgIcon {
+  color: var(--accent-gold);
+  filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.4)) drop-shadow(0px 0px 8px color-mix(in srgb, var(--accent-gold) 40%, transparent));
+}

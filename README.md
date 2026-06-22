@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎮 Yusuf Dwi Saputra | Personal Portfolio
 
-## Getting Started
+A sleek, premium, and interactive **Modern-Retro Portfolio Website** built for showcasing development skills in Frontend Web and Game Development. The design features a blend of nostalgic 8-bit retro vibes with a modern slate-glassmorphism aesthetic, complete with fluid animations, interactive marquee sliders, custom SVG pixel avatar animations, and accordion dropdown details.
 
-First, run the development server:
+🚀 **Live Preview:** [localhost:3000](http://localhost:3000) (when running locally)
+
+---
+
+## ✨ Features
+
+- **🎨 Modern-Retro Aesthetic:** Glassmorphism overlay panels styled with sleek slate color gradients (`--accent-blue`, `--accent-green`, `--accent-gold`, etc.) combined with modern typography.
+- **👁️ Interactive Pixel Avatar:** Custom SVGs with eye-blinking micro-animations that respond dynamically.
+- **⌨️ Role Typer:** A typewriter animation cycling through professional roles ("Frontend Developer", "Game Developer") with modern glitch-like container shifts.
+- **🎡 Dual-Direction Tech Marquee:** An infinite scrolling tech stack marquee. Logo icons move left-to-right (top row) and right-to-left (bottom row) and link directly to official documentation pages.
+- **📂 Accordion Dropdowns:** Detailed entries for Projects (including personal contributions and tech tags) and Education (GPA details) organized into interactive dropdown summaries.
+- **📩 Interactive Contact Form:** Retro-bordered email contact layout.
+- **✨ Particle Background:** Floating retro pixel particles drifting across the background.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** [Next.js 16 (App Router)](https://nextjs.org/)
+- **Core Library:** [React 19](https://react.dev/) & [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** Vanilla CSS & CSS Modules (`*.module.css`) + PostCSS & [Tailwind CSS v4](https://tailwindcss.com/) integration
+- **Icons:** [React Icons](https://react-icons.github.io/react-icons/) (including FontAwesome, SimpleIcons, and Tabler Icons)
+
+---
+
+## 📂 Project Structure
+
+```text
+web-profile/
+├── .next/                  # Next.js build output
+├── public/                 # Static assets (images, SVGs)
+│   ├── favicon.ico
+│   ├── globe.svg
+│   ├── next.svg
+│   ├── vercel.svg
+│   └── window.svg
+├── src/
+│   ├── app/                # Next.js App Router root pages
+│   │   ├── globals.css     # Global variables and main CSS tokens
+│   │   ├── layout.tsx      # Main layout component wrapping the app
+│   │   ├── page.module.css # Styling specific to the main landing page
+│   │   └── page.tsx        # Main homepage entry and sections
+│   └── components/         # Reusable React components
+│       ├── ContactForm.tsx        # Contact UI panel
+│       ├── ContactForm.module.css
+│       ├── FloatingPixels.tsx     # Background particle engine
+│       ├── FloatingPixels.module.css
+│       ├── Navbar.tsx             # Responsive glassmorphism navigation
+│       ├── Navbar.module.css
+│       ├── PixelAvatar.tsx        # Animated SVG avatar
+│       ├── PixelAvatar.module.css
+│       ├── RoleTyper.tsx          # Multi-role auto-typing text component
+│       ├── RoleTyper.module.css
+│       ├── TechMarquee.tsx        # Infinite logo sliding marquee
+│       ├── TechMarquee.module.css
+│       └── ThemeProvider.tsx      # Application theme context provider
+├── eslint.config.mjs       # Linting configurations
+├── next.config.ts          # Next.js specific settings
+├── package.json            # Script definitions and project dependencies
+├── tsconfig.json           # TypeScript configuration
+└── README.md               # Project documentation
+```
+
+---
+
+## 🚀 Getting Started
+
+Follow these steps to run the portfolio locally on your machine.
+
+### Prerequisites
+
+Make sure you have Node.js (version 18+ recommended) installed.
+
+### 1. Installation
+
+Clone the repository and install all dependencies:
+
+```bash
+git clone https://github.com/YusufDW1/yusuf-porto.git
+cd yusuf-porto
+npm install
+```
+
+### 2. Run the Development Server
+
+Start the local Next.js development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Compile and optimize the project for production deployment:
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the built production server locally:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📝 License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Distributed under the MIT License. See `LICENSE` for more information (if applicable).

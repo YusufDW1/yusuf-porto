@@ -1,14 +1,14 @@
 'use client';
 
 import { useTheme } from './ThemeProvider';
-import PixelIcon from './PixelIcon';
+import { FaUser, FaBriefcase, FaCode, FaEnvelope } from 'react-icons/fa';
 import styles from './Navbar.module.css';
 
 const NAV_ITEMS = [
-  { label: 'ABOUT', href: '#about', icon: 'about' },
-  { label: 'PROJECTS', href: '#projects', icon: 'projects' },
-  { label: 'SKILLS', href: '#skills', icon: 'skills' },
-  { label: 'CONTACT', href: '#contact', icon: 'contact' },
+  { label: 'ABOUT', href: '#about', Icon: FaUser },
+  { label: 'PROJECTS', href: '#projects', Icon: FaBriefcase },
+  { label: 'SKILLS', href: '#skills', Icon: FaCode },
+  { label: 'CONTACT', href: '#contact', Icon: FaEnvelope },
 ];
 
 export default function Navbar() {
@@ -44,7 +44,7 @@ export default function Navbar() {
               className={styles.link}
               onClick={(e) => handleNavClick(e, item.href)}
             >
-              <PixelIcon name={item.icon} scale={2} />
+              <item.Icon size={20} />
               <span className={styles.linkText}>{item.label}</span>
             </a>
           ))}
