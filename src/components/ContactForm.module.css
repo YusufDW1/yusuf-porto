@@ -1,0 +1,80 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--accent-gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.input {
+  font-family: var(--font-body);
+  font-size: 18px;
+  padding: 12px 16px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 3px solid var(--border-pixel);
+  outline: none;
+  transition: border-color 0.2s steps(2);
+  box-shadow:
+    inset 2px 2px 0px rgba(0, 0, 0, 0.2),
+    inset -1px -1px 0px rgba(255, 255, 255, 0.05);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+  font-style: normal;
+}
+
+.input:focus {
+  border-color: var(--accent-blue);
+  box-shadow:
+    inset 2px 2px 0px rgba(0, 0, 0, 0.2),
+    inset -1px -1px 0px rgba(255, 255, 255, 0.05),
+    0 0 0 2px color-mix(in srgb, var(--accent-blue) 30%, transparent);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: var(--font-body);
+}
+
+.submitBtn {
+  align-self: flex-start;
+  margin-top: 8px;
+  font-size: 10px;
+}
+
+.submitBtn:disabled {
+  background-color: var(--accent-blue);
+  border-color: var(--accent-blue-light);
+  cursor: default;
+  box-shadow:
+    3px 3px 0px color-mix(in srgb, var(--accent-blue) 60%, black),
+    inset -2px -2px 0px color-mix(in srgb, var(--accent-blue) 70%, black),
+    inset 2px 2px 0px var(--accent-blue-light);
+}
+
+@media (max-width: 768px) {
+  .label {
+    font-size: 7px;
+  }
+
+  .input {
+    font-size: 16px;
+    padding: 10px 12px;
+  }
+}

@@ -1,0 +1,21 @@
+.typer {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+}
+
+.text {
+  font-family: var(--font-body);
+  font-size: 20px;
+  color: var(--accent-blue-light);
+  line-height: 30px;
+}
+
+.cursor {
+  font-family: var(--font-body);
+  font-size: 20px;
+  color: var(--accent-gold);
+  animation: pixel-blink 1s steps(1) infinite;
+  margin-left: 2px;
+  line-height: 30px;
+}

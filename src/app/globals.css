@@ -1,26 +1,302 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+/* ═══════════════════════════════════════════════════════════
+   PIXEL ART DESIGN SYSTEM
+   16-bit aesthetic with muted color palette
+   ═══════════════════════════════════════════════════════════ */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Dark Theme (Default) */
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #16213e;
+  --bg-panel: #0f3460;
+  --bg-panel-alt: #1a2a4e;
+
+  --text-primary: #e8e8e8;
+  --text-secondary: #a0a0b0;
+  --text-muted: #6a6a7a;
+
+  --accent-green: #4a7c59;
+  --accent-green-light: #5a9c6a;
+  --accent-blue: #3a6ea5;
+  --accent-blue-light: #4a8ec5;
+  --accent-earth: #8b7355;
+  --accent-gold: #c9a959;
+  --accent-red: #8b4a4a;
+
+  --border-pixel: #2a2a4a;
+  --border-light: #4a4a6a;
+  --border-accent: #3a6ea5;
+
+  --shadow-pixel: 
+    4px 4px 0px #0a0a1e,
+    -1px -1px 0px #2a2a4e;
+  
+  --pixel-size: 4px;
+  --font-pixel: var(--font-press-start), 'Press Start 2P', monospace;
+  --font-body: var(--font-vt323), 'VT323', monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+[data-theme='light'] {
+  --bg-primary: #e8dcc8;
+  --bg-secondary: #f0e6d3;
+  --bg-panel: #d4c8b0;
+  --bg-panel-alt: #ddd2be;
+
+  --text-primary: #2a1a0a;
+  --text-secondary: #5a4a3a;
+  --text-muted: #8a7a6a;
+
+  --accent-green: #3a6a49;
+  --accent-green-light: #4a8a59;
+  --accent-blue: #2a5a8a;
+  --accent-blue-light: #3a7aaa;
+  --accent-earth: #7a6345;
+  --accent-gold: #b89a49;
+  --accent-red: #7a3a3a;
+
+  --border-pixel: #9a8a6a;
+  --border-light: #b0a080;
+  --border-accent: #2a5a8a;
+
+  --shadow-pixel:
+    4px 4px 0px #a09070,
+    -1px -1px 0px #f0e6d3;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Reset & Base ─── */
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.3s steps(4), color 0.3s steps(4);
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+/* Pixelated grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image:
+    linear-gradient(var(--border-pixel) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-pixel) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ─── Pixel Border Utility ─── */
+
+.pixel-border {
+  border: var(--pixel-size) solid var(--border-pixel);
+  box-shadow:
+    var(--pixel-size) var(--pixel-size) 0px var(--border-light),
+    calc(var(--pixel-size) * -1) calc(var(--pixel-size) * -1) 0px var(--border-light),
+    var(--pixel-size) calc(var(--pixel-size) * -1) 0px var(--border-light),
+    calc(var(--pixel-size) * -1) var(--pixel-size) 0px var(--border-light);
+  background-color: var(--bg-panel);
+  position: relative;
+}
+
+.pixel-border-accent {
+  border: var(--pixel-size) solid var(--border-accent);
+  box-shadow:
+    var(--pixel-size) var(--pixel-size) 0px color-mix(in srgb, var(--border-accent) 50%, black),
+    calc(var(--pixel-size) * -1) calc(var(--pixel-size) * -1) 0px color-mix(in srgb, var(--border-accent) 50%, white);
+}
+
+/* ─── Pixel Button ─── */
+
+.pixel-btn {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  padding: 12px 24px;
+  background-color: var(--accent-green);
+  color: var(--text-primary);
+  border: 3px solid var(--accent-green-light);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  transition: transform 0.1s steps(2);
+  box-shadow:
+    3px 3px 0px color-mix(in srgb, var(--accent-green) 60%, black),
+    inset -2px -2px 0px color-mix(in srgb, var(--accent-green) 70%, black),
+    inset 2px 2px 0px var(--accent-green-light);
+}
+
+.pixel-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow:
+    4px 4px 0px color-mix(in srgb, var(--accent-green) 60%, black),
+    inset -2px -2px 0px color-mix(in srgb, var(--accent-green) 70%, black),
+    inset 2px 2px 0px var(--accent-green-light);
+}
+
+.pixel-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow:
+    1px 1px 0px color-mix(in srgb, var(--accent-green) 60%, black),
+    inset -2px -2px 0px color-mix(in srgb, var(--accent-green) 70%, black),
+    inset 2px 2px 0px var(--accent-green-light);
+}
+
+/* ─── Section Title ─── */
+
+.section-title {
+  font-family: var(--font-pixel);
+  font-size: 16px;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  text-align: center;
+  margin-bottom: 48px;
+  letter-spacing: 2px;
+  position: relative;
+}
+
+.section-title::before,
+.section-title::after {
+  content: '◆ ◆ ◆';
+  display: block;
+  font-size: 6px;
+  color: var(--border-light);
+  letter-spacing: 8px;
+  margin: 12px 0;
+}
+
+/* ─── Container ─── */
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ─── Pixel Art Scale Helper ─── */
+
+.pixel-art {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+/* ─── Pixel Divider ─── */
+
+.pixel-divider {
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--border-pixel) 0px,
+    var(--border-pixel) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+  margin: 0;
+}
+
+/* ─── Scrollbar Pixel Styling ─── */
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+  border-left: 2px solid var(--border-pixel);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border: 2px solid var(--border-pixel);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue);
+}
+
+/* ─── Selection ─── */
+
+::selection {
+  background: var(--accent-blue);
+  color: var(--text-primary);
+}
+
+/* ─── Keyframes ─── */
+
+@keyframes pixel-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pixel-blink {
+  0%, 90%, 100% { opacity: 1; }
+  95% { opacity: 0; }
+}
+
+@keyframes pixel-twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes pixel-sway {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(2deg); }
+  75% { transform: rotate(-2deg); }
+}
+
+/* ─── Responsive ─── */
+
+@media (max-width: 768px) {
+  :root {
+    --pixel-size: 3px;
+  }
+
+  body {
+    font-size: 18px;
+  }
+
+  .section-title {
+    font-size: 12px;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --pixel-size: 2px;
+  }
+
+  body {
+    font-size: 16px;
+  }
+
+  .section-title {
+    font-size: 10px;
+  }
 }

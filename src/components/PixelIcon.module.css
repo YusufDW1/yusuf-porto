@@ -1,0 +1,19 @@
+.iconWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.iconPixel {
+  display: block;
+  width: 1px;
+  height: 1px;
+  transform-origin: top left;
+  image-rendering: pixelated;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
