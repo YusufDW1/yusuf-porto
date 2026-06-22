@@ -16,23 +16,35 @@ export default function Navbar() {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+
+    if (href === '#hero') {
+      // Jika yang diklik adalah logo, paksa scroll ke titik 0 paling atas halaman
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      // Untuk menu navigasi lainnya, scroll ke elemen kontainer masing-masing
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
   return (
     <nav className={styles.nav} id="main-nav">
       <div className={styles.navInner}>
-        {/* Logo / Name */}
+        {/* Logo Ikon Y Pixel Art - Kembali ke Paling Atas */}
         <a
           href="#hero"
-          className={styles.logo}
+          className={styles.logoContainer}
           onClick={(e) => handleNavClick(e, '#hero')}
+          aria-label="Scroll to Top"
         >
-          <span className={styles.logoMain}>YUSUF DWI SAPUTRA</span>
-          <span className={styles.logoSub}>FRONTEND & GAME DEVELOPER</span>
+          <div className={styles.pixelLogoY}>
+            <div className={styles.gridPixelY} />
+          </div>
         </a>
 
         {/* Nav Links */}

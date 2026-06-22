@@ -6,8 +6,8 @@
 }
 
 .avatarFrame {
-  width: 130px;
-  height: 130px;
+  width: 160px;
+  height: 160px;
   background-color: var(--bg-panel);
   border: 3px solid var(--border-pixel);
   border-radius: 50%;
@@ -32,13 +32,13 @@
 }
 
 .avatarFrame::before {
-  top: 12px;
-  left: 12px;
+  top: 16px;
+  left: 16px;
 }
 
 .avatarFrame::after {
-  bottom: 12px;
-  right: 12px;
+  bottom: 16px;
+  right: 16px;
 }
 
 .profileImage {
@@ -67,20 +67,20 @@
 
 @media (max-width: 768px) {
   .avatarFrame {
-    width: 110px;
-    height: 110px;
+    width: 130px;
+    height: 130px;
   }
 
   .avatarFrame::before {
-    top: 10px;
-    left: 10px;
+    top: 12px;
+    left: 12px;
     width: 6px;
     height: 6px;
   }
 
   .avatarFrame::after {
-    bottom: 10px;
-    right: 10px;
+    bottom: 12px;
+    right: 12px;
     width: 6px;
     height: 6px;
   }
@@ -88,8 +88,8 @@
 
 @media (max-width: 480px) {
   .avatarFrame {
-    width: 95px;
-    height: 95px;
+    width: 110px;
+    height: 110px;
   }
 }
 

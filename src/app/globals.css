@@ -35,6 +35,7 @@
   --pixel-size: 3px;
   --font-heading: var(--font-heading), 'Chakra Petch', sans-serif;
   --font-body: var(--font-body), 'JetBrains Mono', monospace;
+  --font-pixel: var(--font-heading);
 }
 
 [data-theme='light'] {
@@ -84,7 +85,7 @@ body {
   line-height: 1.5;
   min-height: 100vh;
   overflow-x: hidden;
-  transition: background-color 0.3s steps(4), color 0.3s steps(4);
+  transition: background-color 0.3s ease, color 0.3s ease;
   image-rendering: pixelated;
   -ms-interpolation-mode: nearest-neighbor;
 }
@@ -133,7 +134,7 @@ a {
 
 .pixel-btn {
   font-family: var(--font-heading);
-  font-size: 10px;
+  font-size: 14px;
   padding: 12px 24px;
   background-color: var(--accent-green);
   color: var(--text-primary);
@@ -142,7 +143,7 @@ a {
   text-transform: uppercase;
   letter-spacing: 1px;
   position: relative;
-  transition: transform 0.1s steps(2);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
   box-shadow:
     3px 3px 0px color-mix(in srgb, var(--accent-green) 60%, black),
     inset -2px -2px 0px color-mix(in srgb, var(--accent-green) 70%, black),
@@ -169,7 +170,7 @@ a {
 
 .section-title {
   font-family: var(--font-heading);
-  font-size: 16px;
+  font-size: 24px;
   text-transform: uppercase;
   color: var(--accent-gold);
   text-align: center;

@@ -56,7 +56,8 @@
 .avatarWrapper {
   display: flex;
   justify-content: flex-start;
-  margin-top: -50px;
+  margin-top: -80px;
+  /* Offset to overlap the banner (half of 160px avatar height) */
   padding-left: 28px;
   position: relative;
   z-index: 2;
@@ -69,18 +70,19 @@
 
 .profileName {
   font-family: var(--font-pixel);
-  font-size: 16px;
+  font-size: 28px;
+  font-weight: 700;
   color: var(--text-primary);
   letter-spacing: 1px;
-  line-height: 1.4;
+  line-height: 1.2;
 }
 
 .profileRole {
   font-family: var(--font-body);
-  font-size: 20px;
+  font-size: 22px;
   color: var(--accent-blue-light);
-  margin-top: 2px;
-  height: 30px;
+  margin-top: 6px;
+  height: 34px;
   display: flex;
   align-items: center;
 }
@@ -119,7 +121,7 @@
   padding: 14px 20px;
   border-right: 1px solid var(--border-pixel);
   text-decoration: none;
-  transition: background-color 0.2s steps(2);
+  transition: background-color 0.2s ease;
 }
 
 .socialBadge:last-child {
@@ -138,7 +140,7 @@
 
 .socialBadgeName {
   font-family: var(--font-pixel);
-  font-size: 8px;
+  font-size: 11px;
   color: var(--text-primary);
   letter-spacing: 1px;
 }
@@ -157,7 +159,7 @@
 
 .sectionHeading {
   font-family: var(--font-pixel);
-  font-size: 16px;
+  font-size: 22px;
   color: var(--text-primary);
   letter-spacing: 1px;
   margin-bottom: 20px;
@@ -201,7 +203,7 @@
   justify-content: center;
   border: 2px solid var(--border-pixel);
   background: var(--bg-panel);
-  transition: border-color 0.2s steps(2), transform 0.2s steps(2);
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
 .stackItem:hover {
@@ -215,22 +217,22 @@
   border: 2px solid var(--border-pixel);
   background-color: var(--bg-panel);
   margin-bottom: 16px;
-  transition: border-color 0.2s steps(2);
+  transition: border-color 0.2s ease;
 }
 
-.pixelDropdown[open] {
+.pixelDropdown.open {
   border-color: var(--accent-gold);
 }
 
 .dropdownSummary {
   padding: 16px 20px;
   cursor: pointer;
-  list-style: none; /* Hide default marker */
+  list-style: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: var(--bg-panel-alt);
-  transition: background-color 0.2s steps(2);
+  transition: background-color 0.2s ease;
 }
 
 .dropdownSummary::-webkit-details-marker {
@@ -245,20 +247,39 @@
   color: var(--accent-gold);
   font-family: var(--font-pixel);
   font-size: 12px;
-  transition: transform 0.1s steps(2);
+  transition: transform 0.2s ease;
 }
 
-.pixelDropdown[open] .dropdownIcon {
+.pixelDropdown.open .dropdownIcon {
   transform: rotate(90deg);
 }
 
 .dropdownContent {
-  padding: 20px;
-  border-top: 2px solid var(--border-pixel);
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease-out, border-top-color 0.25s ease-out;
+  overflow: hidden;
+  border-top: 2px solid transparent;
   font-family: var(--font-body);
   font-size: 18px;
   color: var(--text-secondary);
   line-height: 1.6;
+}
+
+.pixelDropdown.open .dropdownContent {
+  grid-template-rows: 1fr;
+  border-top-color: var(--border-pixel);
+}
+
+.dropdownInnerContent {
+  min-height: 0;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.pixelDropdown.open .dropdownInnerContent {
+  opacity: 1;
 }
 
 .contributionsTitle {
@@ -280,38 +301,98 @@
   color: var(--text-secondary);
 }
 
-/* ═══════ WORKSPACE ═══════ */
+/* ═══════ PROJECTS INTERACTIVE SLIDER ═══════ */
 
-.workspacePanel {
-  padding: 20px;
+.sectionHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sliderNav {
+  display: flex;
+  gap: 8px;
+}
+
+.navButton {
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--bg-panel);
+  border: 2px solid var(--border-pixel);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  transition: all 0.2s ease;
+  user-select: none;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
 }
 
-/* ═══════ PROJECTS ═══════ */
+.navButton:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
+}
 
-.projectsList {
+.navButton:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.projectSlider {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 20px;
+  padding-top: 12px;
+  padding-bottom: 24px;
+  margin-top: -12px;
+  margin-right: -20px;
+  padding-right: 20px;
+
+  /* Sembunyikan scrollbar untuk Firefox */
+  scrollbar-width: none;
+}
+
+/* Sembunyikan scrollbar untuk Chrome, Safari, dan Opera (Garis abu-abu yang ada di gambar) */
+.projectSlider::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.projectCard {
+  flex: 0 0 85%;
+  scroll-snap-align: center;
+  border: 2px solid var(--border-pixel);
+  background-color: var(--bg-panel);
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 0;
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-.projectItem {
-  padding: 20px 20px;
-  border-bottom: 1px solid var(--border-pixel);
-  transition: transform 0.2s steps(4), background-color 0.2s steps(4);
-  border-left: 2px solid transparent;
+.projectCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-gold);
 }
 
-.projectItem:hover {
-  transform: translateX(4px);
-  background-color: var(--bg-panel-alt);
-  border-left-color: var(--accent-gold);
+.projectCard .projectHeader {
+  margin-bottom: 16px;
 }
 
-.projectItem:last-child {
-  border-bottom: none;
+.projectCard .dropdownContent {
+  border-top: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .projectHeader {
@@ -341,7 +422,8 @@
 
 .projectTitle {
   font-family: var(--font-pixel);
-  font-size: 10px;
+  font-size: 22px;
+  font-weight: 600;
   color: var(--text-primary);
   letter-spacing: 1px;
 }
@@ -357,7 +439,7 @@
   font-size: 17px;
   color: var(--accent-blue-light);
   margin-bottom: 6px;
-  padding-left: 48px;
+  padding-left: 0;
 }
 
 .projectDesc {
@@ -365,7 +447,7 @@
   font-size: 18px;
   color: var(--text-secondary);
   line-height: 1.5;
-  padding-left: 48px;
+  padding-left: 0;
   margin-bottom: 10px;
 }
 
@@ -373,7 +455,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  padding-left: 48px;
+  padding-left: 0;
 }
 
 .techTag {
@@ -383,6 +465,78 @@
   font-size: 16px;
   color: var(--text-muted);
   letter-spacing: 0.5px;
+}
+
+/* ═══════ STAGE GAME PIXEL ART SELECTOR ═══════ */
+
+.stageTimeline {
+  position: relative;
+  max-width: 400px;
+  margin: 24px auto 12px;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stageLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-image: linear-gradient(to right, var(--border-pixel) 50%, transparent 50%);
+  background-size: 8px 4px;
+  z-index: 1;
+}
+
+.stageDotsContainer {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+  padding: 0 10px;
+}
+
+.stageDot {
+  width: 12px;
+  height: 12px;
+  background-color: var(--bg-panel);
+  border: 2px solid var(--border-pixel);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.1s steps(2), background-color 0.2s ease;
+}
+
+.stageDot:hover {
+  background-color: var(--accent-blue-light);
+  transform: scale(1.2);
+}
+
+.stageDotActive {
+  width: 18px;
+  height: 18px;
+  background-color: var(--accent-gold);
+  border: 3px solid var(--border-pixel);
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
+  transform: rotate(45deg);
+  animation: pixelPulse 0.6s infinite steps(2) alternate;
+}
+
+.stageDotActive:hover {
+  background-color: var(--accent-gold);
+  transform: scale(1.1) rotate(45deg);
+}
+
+@keyframes pixelPulse {
+  0% {
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+  }
+
+  100% {
+    box-shadow: 4px 4px 0px var(--border-light);
+  }
 }
 
 /* ═══════ CONTACT ═══════ */
@@ -400,7 +554,7 @@
 
 .footerCopy {
   font-family: var(--font-pixel);
-  font-size: 6px;
+  font-size: 10px;
   color: var(--text-muted);
   letter-spacing: 2px;
   margin-bottom: 10px;
@@ -412,15 +566,37 @@
   letter-spacing: 4px;
 }
 
-/* ═══════ RESPONSIVE ═══════ */
+/* ═══════ RESPONSIVE BREAKPOINTS ═══════ */
 
 @media (max-width: 768px) {
   .mainContent {
     padding: 0 12px 32px;
   }
 
+  .avatarWrapper {
+    margin-top: -65px;
+    padding-left: 20px;
+  }
+
+  .profileInfo {
+    padding: 12px 20px 4px;
+  }
+
   .profileName {
-    font-size: 13px;
+    font-size: 22px;
+  }
+
+  .profileRole {
+    font-size: 18px;
+    height: 28px;
+  }
+
+  .sectionHeading {
+    font-size: 18px;
+  }
+
+  .projectTitle {
+    font-size: 18px;
   }
 
   .socialRow {
@@ -446,28 +622,41 @@
     flex-direction: column;
     gap: 2px;
   }
+
+  .projectCard {
+    flex: 0 0 92%;
+    padding: 20px;
+  }
 }
 
 @media (max-width: 480px) {
-  .profileName {
-    font-size: 11px;
-  }
-
-  .sectionHeading {
-    font-size: 13px;
-  }
-
-  .banner {
-    height: 70px;
-  }
-
   .avatarWrapper {
-    margin-top: -40px;
+    margin-top: -55px;
     padding-left: 16px;
   }
 
   .profileInfo {
     padding: 12px 16px 4px;
+  }
+
+  .profileName {
+    font-size: 18px;
+  }
+
+  .profileRole {
+    font-size: 16px;
+  }
+
+  .sectionHeading {
+    font-size: 16px;
+  }
+
+  .projectTitle {
+    font-size: 16px;
+  }
+
+  .banner {
+    height: 70px;
   }
 
   .quickInfo {
