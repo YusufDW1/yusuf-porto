@@ -1,10 +1,33 @@
 /* ═══════════════════════════════════════════════════════════
-   SKILL GRID — Clean responsive grid with icon + label
+   SKILL GROUPS — Categorized clean grids
    ═══════════════════════════════════════════════════════════ */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.groupTitle {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  border-left: 2px solid var(--accent);
+  padding-left: var(--space-2);
+}
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   gap: var(--space-3);
 }
 
@@ -54,7 +77,7 @@
 
 @media (max-width: 480px) {
   .grid {
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
     gap: var(--space-2);
   }
 

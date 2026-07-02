@@ -19,7 +19,15 @@ export default function ContactForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const subject = encodeURIComponent(
+      `Portfolio Contact from ${formData.name}`,
+    );
+    const body = encodeURIComponent(
+      `From: ${formData.name} (${formData.email})\n\n${formData.message}`,
+    );
+    window.location.href = `mailto:yusufdwi456@gmail.com?subject=${subject}&body=${body}`;
     setSubmitted(true);
+    setFormData({ name: '', email: '', message: '' });
     setTimeout(() => setSubmitted(false), 3000);
   };
 
@@ -80,7 +88,7 @@ export default function ContactForm() {
         className={styles.submitBtn}
         disabled={submitted}
       >
-        {submitted ? 'Message sent ✓' : 'Send message'}
+        {submitted ? 'Opening email client ✓' : 'Send message'}
       </button>
     </form>
   );

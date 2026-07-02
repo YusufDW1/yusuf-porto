@@ -13,6 +13,7 @@ import {
   FaLinkedin,
   FaGithub,
   FaArrowRight,
+  FaExternalLinkAlt,
 } from 'react-icons/fa';
 import ContactForm from '../components/ContactForm';
 import RoleTyper from '../components/RoleTyper';
@@ -20,6 +21,39 @@ import TechMarquee from '../components/TechMarquee';
 import styles from './page.module.css';
 
 const PROJECTS = [
+  {
+    title: 'PORTOFOLIO',
+    date: '2026',
+    role: 'Frontend Developer',
+    description:
+      'Website portfolio interaktif pribadi yang dirancang dengan performa tinggi, animasi modern, serta fitur deteksi tema otomatis.',
+    contributions: [
+      'Membangun website portfolio menggunakan Next.js App Router dan React.',
+      'Merancang desain sistem kustom dengan OKLCH color space dan CSS Variables.',
+      'Mengimplementasikan animasi transisi kustom berkinerja tinggi.',
+    ],
+    techs: ['Next.js', 'React', 'CSS Modules', 'TypeScript'],
+    accent: '#e040fb',
+    Icon: SiReact,
+    github: 'https://github.com/YusufDW1/yusuf-porto.git',
+    live: 'https://yusuf-porto.vercel.app/',
+  },
+  {
+    title: 'TAKSI KILAT 3D',
+    date: '2026',
+    role: 'Game Designer & Game Programmer',
+    description:
+      'Game casual driving 3D low-poly berbasis time-attack simulasi mengemudi taksi di mana pemain berpacu dengan waktu untuk menjemput dan mengantarkan penumpang di area perkotaan sebelum waktu habis.',
+    contributions: [
+      'Memprogram fisika suspensi AWD (All-Wheel Drive) dan logika pengereman cerdas (Smart Braking) taksi.',
+      'Mendesain sistem navigasi panah 3D dinamis yang menunjuk ke arah koordinat zona jemput dan antar.',
+      'Mengimplementasikan UI Panel Struk Kertas Kasir real-time untuk rincian detail tarif pendapatan.',
+    ],
+    techs: ['Unity', 'C#', '3D Low-Poly', 'Physics'],
+    accent: '#ffd54f',
+    Icon: SiUnity,
+    github: 'https://github.com/YusufDW1/Taksi-Kilat-3D.git',
+  },
   {
     title: 'SEHARTA',
     date: '2026',
@@ -32,8 +66,9 @@ const PROJECTS = [
       'Mengintegrasikan Computer Vision (OCR) untuk otomatisasi pencatatan transaksi via pemindaian struk belanja.',
     ],
     techs: ['Flutter', 'Dart', 'GetX', 'OCR', 'SQLite', 'FastAPI'],
-    color: 'var(--accent)',
+    accent: '#4dd0e1',
     Icon: SiReact,
+    github: 'https://github.com/YusufDW1/Seharta.git',
   },
   {
     title: 'AMBALEARN',
@@ -47,8 +82,9 @@ const PROJECTS = [
       'Membuat komponen UI responsif untuk fitur cheating detection berbasis kamera menggunakan MediaPipe.',
     ],
     techs: ['Flutter', 'Dart', 'REST API', 'Flask', 'MediaPipe', 'MySQL'],
-    color: 'var(--accent)',
+    accent: '#b388ff',
     Icon: SiReact,
+    github: 'https://github.com/YusufDW1/AmbaLearn.git',
   },
   {
     title: 'MY KONBINI',
@@ -62,8 +98,9 @@ const PROJECTS = [
       'Mengimplementasikan Local Storage untuk penyimpanan data transaksi dan inventaris secara aman dan offline-first.',
     ],
     techs: ['React Native', 'JavaScript', 'Local Storage'],
-    color: 'var(--accent)',
+    accent: '#69f0ae',
     Icon: SiReact,
+    github: 'https://github.com/YusufDW1/MyKonbini.git',
   },
   {
     title: 'KNIGHT ADVENTURE',
@@ -77,8 +114,9 @@ const PROJECTS = [
       'Mengintegrasikan aset pixel art, tilemap grid, dan sistem efek suara (SFX) dinamis di Unity.',
     ],
     techs: ['Unity', 'C#', 'Aseprite'],
-    color: 'var(--accent)',
+    accent: '#ff7043',
     Icon: SiUnity,
+    github: '',
   },
 ];
 
@@ -108,156 +146,60 @@ const SOCIAL_LINKS = [
 ];
 
 export default function Home() {
-  const [eduOpen, setEduOpen] = useState<{ [key: number]: boolean }>({
-    0: false,
-  });
+  const [eduOpen, setEduOpen] = useState(false);
   const [activeIdx, setActiveIdx] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
-  const animationFrameRef = useRef<number | null>(null);
 
-  const toggleEdu = (idx: number) => {
-    setEduOpen((prev) => ({ ...prev, [idx]: !prev[idx] }));
-  };
-
-  // Sync active dot with scroll position
+  // Sync active dot via horizontal center proximity calculation
   useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+
     const handleScroll = () => {
-      if (sliderRef.current) {
-        const slider = sliderRef.current;
-        const sliderRect = slider.getBoundingClientRect();
-        const sliderCenter = sliderRect.left + sliderRect.width / 2;
-        const cards = Array.from(slider.children) as HTMLElement[];
-
-        let closestIdx = 0;
-        let minDistance = Infinity;
-
-        cards.forEach((card, i) => {
-          const cardRect = card.getBoundingClientRect();
-          const cardCenter = cardRect.left + cardRect.width / 2;
-          const distance = Math.abs(cardCenter - sliderCenter);
-          if (distance < minDistance) {
-            minDistance = distance;
-            closestIdx = i;
-          }
-        });
-        setActiveIdx(closestIdx);
-      }
-    };
-
-    const sliderElement = sliderRef.current;
-    if (sliderElement) {
-      sliderElement.addEventListener('scroll', handleScroll);
-    }
-    return () => sliderElement?.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollSlider = (direction: 'left' | 'right') => {
-    if (sliderRef.current) {
-      const slider = sliderRef.current;
+      const center = slider.scrollLeft + slider.offsetWidth / 2;
       const cards = Array.from(slider.children) as HTMLElement[];
-      if (cards.length === 0) return;
-
-      const sliderRect = slider.getBoundingClientRect();
-      const sliderCenter = sliderRect.left + sliderRect.width / 2;
-
-      let currentIndex = 0;
+      let closestIdx = 0;
       let minDistance = Infinity;
 
-      cards.forEach((card, index) => {
-        const cardRect = card.getBoundingClientRect();
-        const cardCenter = cardRect.left + cardRect.width / 2;
-        const distance = Math.abs(cardCenter - sliderCenter);
-        if (distance < minDistance) {
-          minDistance = distance;
-          currentIndex = index;
+      cards.forEach((card, idx) => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const dist = Math.abs(cardCenter - center);
+        if (dist < minDistance) {
+          minDistance = dist;
+          closestIdx = idx;
         }
       });
+      setActiveIdx(closestIdx);
+    };
 
-      let targetIndex =
-        direction === 'left' ? currentIndex - 1 : currentIndex + 1;
-      targetIndex = Math.max(0, Math.min(targetIndex, cards.length - 1));
+    slider.addEventListener('scroll', handleScroll, { passive: true });
+    return () => slider.removeEventListener('scroll', handleScroll);
+  }, []);
 
-      if (
-        targetIndex === currentIndex &&
-        ((direction === 'left' && slider.scrollLeft === 0) ||
-          (direction === 'right' &&
-            slider.scrollLeft >= slider.scrollWidth - slider.clientWidth))
-      ) {
-        return;
+  const scrollToCard = (index: number) => {
+    const slider = sliderRef.current;
+    const card = slider?.children[index] as HTMLElement | undefined;
+    if (!slider || !card) return;
+
+    const start = slider.scrollLeft;
+    const target = card.offsetLeft - slider.offsetWidth / 2 + card.offsetWidth / 2;
+    const startTime = performance.now();
+    const duration = 300;
+
+    slider.style.scrollSnapType = 'none';
+
+    const animate = (now: number) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      slider.scrollLeft = start + (target - start) * ease;
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        slider.style.scrollSnapType = 'x mandatory';
       }
-
-      const targetCard = cards[targetIndex];
-      const targetCardRect = targetCard.getBoundingClientRect();
-      const calculatedTarget =
-        slider.scrollLeft +
-        (targetCardRect.left - sliderRect.left) -
-        sliderRect.width / 2 +
-        targetCardRect.width / 2;
-
-      const maxScroll = slider.scrollWidth - slider.clientWidth;
-      let finalTarget = Math.max(0, Math.min(calculatedTarget, maxScroll));
-
-      if (targetIndex === 0) finalTarget = 0;
-      if (targetIndex === cards.length - 1) finalTarget = maxScroll;
-
-      if (animationFrameRef.current !== null) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-
-      slider.style.scrollSnapType = 'none';
-      slider.style.scrollBehavior = 'auto';
-
-      const start = slider.scrollLeft;
-      const dist = finalTarget - start;
-      const duration = 300;
-      let startTime: number | null = null;
-
-      const animate = (currentTime: number) => {
-        if (!startTime) startTime = currentTime;
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-
-        const ease = 1 - Math.pow(1 - progress, 3);
-        slider.scrollLeft = start + dist * ease;
-
-        if (progress < 1) {
-          animationFrameRef.current = requestAnimationFrame(animate);
-        } else {
-          slider.scrollLeft = finalTarget;
-          slider.style.scrollSnapType = 'x mandatory';
-          slider.style.scrollBehavior = 'smooth';
-          animationFrameRef.current = null;
-        }
-      };
-
-      animationFrameRef.current = requestAnimationFrame(animate);
-    }
-  };
-
-  const scrollToStage = (index: number) => {
-    if (sliderRef.current) {
-      const slider = sliderRef.current;
-      const cards = Array.from(slider.children) as HTMLElement[];
-      const targetCard = cards[index];
-
-      if (targetCard) {
-        const sliderRect = slider.getBoundingClientRect();
-        const targetCardRect = targetCard.getBoundingClientRect();
-        const calculatedTarget =
-          slider.scrollLeft +
-          (targetCardRect.left - sliderRect.left) -
-          sliderRect.width / 2 +
-          targetCardRect.width / 2;
-
-        const maxScroll = slider.scrollWidth - slider.clientWidth;
-        let finalTarget = Math.max(0, Math.min(calculatedTarget, maxScroll));
-
-        if (index === 0) finalTarget = 0;
-        if (index === cards.length - 1) finalTarget = maxScroll;
-
-        slider.scrollTo({ left: finalTarget, behavior: 'smooth' });
-      }
-    }
+    };
+    requestAnimationFrame(animate);
   };
 
   return (
@@ -268,7 +210,7 @@ export default function Home() {
       <Navbar />
 
       <main id="main-content" className={styles.mainContent}>
-        {/* ═══════ HERO ═══════ */}
+        {/* ═══════ HERO (merged with About) ═══════ */}
         <section id="hero" className={styles.heroSection}>
           <div className={styles.heroTop}>
             <PixelAvatar />
@@ -282,9 +224,13 @@ export default function Home() {
 
           <div className={styles.heroBio}>
             <p>
-              Mobile Frontend & Game Developer dari Tegal, Indonesia. Membangun
-              rekayasa perangkat lunak seluler yang imersif dan menciptakan dunia
-              game yang pixel-perfect.
+              Hello, World! Saya <strong>Yusuf Dwi Saputra</strong>.
+            </p>
+            <p>
+              Saya seorang Web, Mobile, dan Game Developer asal Tegal, Indonesia. Singkatnya, saya suka mengeksplorasi dunia rekayasa perangkat lunak—mulai dari merancang aplikasi mobile yang mulus, membangun web modern, sampai merakit dunia game yang interaktif.
+            </p>
+            <p>
+              Di lini web dan mobile, saya biasa bermain dengan React, Next.js, Flutter (GetX), React Native, serta Laravel untuk pengembangan sisi backend. Sementara untuk urusan game, Unity dan C# adalah andalan saya. Bagi saya, coding bukan cuma soal baris kode, tapi tentang bagaimana mengubah ide kreatif menjadi produk digital yang hidup dan solutif.
             </p>
           </div>
 
@@ -295,7 +241,7 @@ export default function Home() {
             </div>
             <div className={styles.metaItem}>
               <FaCode size={14} aria-hidden="true" />
-              <span>Mobile Frontend Developer</span>
+              <span>Frontend &amp; Game Developer</span>
             </div>
             <div className={styles.metaItem}>
               <FaEnvelope size={14} aria-hidden="true" />
@@ -324,25 +270,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ═══════ ABOUT ═══════ */}
-        <section id="about" className={styles.section}>
-          <h2 className={styles.sectionHeading}>About</h2>
-          <div className={styles.prose}>
-            <p>
-              Hello, World! Saya <strong>Yusuf Dwi Saputra</strong> — seorang
-              Mobile Frontend &amp; Game Developer dari Tegal, Indonesia. Saya
-              suka membangun rekayasa perangkat lunak seluler yang imersif dan
-              menciptakan dunia game yang pixel-perfect.
-            </p>
-            <p>
-              Dengan pengalaman di teknologi mobile seperti Flutter, GetX, dan
-              React Native, dikombinasikan dengan kemampuan game development di
-              Unity dan C#, saya siap menjembatani ide kreatif ke dalam produk
-              digital interaktif.
-            </p>
-          </div>
-        </section>
-
         {/* ═══════ SKILLS ═══════ */}
         <section id="skills" className={styles.section}>
           <h2 className={styles.sectionHeading}>Skills</h2>
@@ -359,14 +286,14 @@ export default function Home() {
             <div className={styles.sliderNav}>
               <button
                 className={styles.navBtn}
-                onClick={() => scrollSlider('left')}
+                onClick={() => scrollToCard(Math.max(0, activeIdx - 1))}
                 aria-label="Previous project"
               >
                 ←
               </button>
               <button
                 className={styles.navBtn}
-                onClick={() => scrollSlider('right')}
+                onClick={() => scrollToCard(Math.min(PROJECTS.length - 1, activeIdx + 1))}
                 aria-label="Next project"
               >
                 →
@@ -378,7 +305,13 @@ export default function Home() {
             {PROJECTS.map((project) => (
               <article key={project.title} className={styles.projectCard}>
                 <div className={styles.projectHeader}>
-                  <div className={styles.projectIconWrap}>
+                  <div
+                    className={styles.projectIconWrap}
+                    style={{
+                      color: project.accent,
+                      background: `${project.accent}1a`,
+                    }}
+                  >
                     <project.Icon size={20} aria-hidden="true" />
                   </div>
                   <div className={styles.projectMeta}>
@@ -391,12 +324,43 @@ export default function Home() {
                   <p className={styles.projectRole}>{project.role}</p>
                   <p className={styles.projectDesc}>{project.description}</p>
 
-                  <h4 className={styles.contribTitle}>Kontribusiku:</h4>
-                  <ul className={styles.contribList}>
-                    {project.contributions.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
+                  <div className={styles.projectActions}>
+                    {project.github ? (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.projectBtn}
+                      >
+                        <FaGithub size={14} aria-hidden="true" />
+                        <span>Source Code</span>
+                      </a>
+                    ) : (
+                      <button
+                        disabled
+                        className={`${styles.projectBtn} ${styles.projectBtnDisabled}`}
+                      >
+                        <FaGithub size={14} aria-hidden="true" />
+                        <span>Source Code</span>
+                      </button>
+                    )}
+
+                    {'live' in project && project.live && (
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.projectBtn}
+                        style={{
+                          borderColor: project.accent,
+                          color: project.accent,
+                        }}
+                      >
+                        <FaExternalLinkAlt size={12} aria-hidden="true" />
+                        <span>Live Preview</span>
+                      </a>
+                    )}
+                  </div>
 
                   <div className={styles.projectTechs}>
                     {project.techs.map((tech) => (
@@ -411,12 +375,16 @@ export default function Home() {
           </div>
 
           {/* Stage dots */}
-          <div className={styles.stageNav} role="tablist" aria-label="Project navigation">
+          <div
+            className={styles.stageNav}
+            role="tablist"
+            aria-label="Project navigation"
+          >
             {PROJECTS.map((p, index) => (
               <button
                 key={index}
                 className={`${styles.stageDot} ${activeIdx === index ? styles.stageDotActive : ''}`}
-                onClick={() => scrollToStage(index)}
+                onClick={() => scrollToCard(index)}
                 aria-label={`Go to ${p.title}`}
                 role="tab"
                 aria-selected={activeIdx === index}
@@ -429,47 +397,44 @@ export default function Home() {
         <section id="education" className={styles.section}>
           <h2 className={styles.sectionHeading}>Education</h2>
           <div className={styles.eduList}>
-            {EDUCATION.map((edu, idx) => {
-              const isOpen = !!eduOpen[idx];
-              return (
-                <div
-                  key={idx}
-                  className={`${styles.eduItem} ${isOpen ? styles.eduOpen : ''}`}
+            {EDUCATION.map((edu, idx) => (
+              <div
+                key={idx}
+                className={`${styles.eduItem} ${eduOpen ? styles.eduOpen : ''}`}
+              >
+                <button
+                  className={styles.eduSummary}
+                  onClick={() => setEduOpen((prev) => !prev)}
+                  aria-expanded={eduOpen}
+                  aria-controls={`edu-detail-${idx}`}
                 >
-                  <button
-                    className={styles.eduSummary}
-                    onClick={() => toggleEdu(idx)}
-                    aria-expanded={isOpen}
-                    aria-controls={`edu-detail-${idx}`}
-                  >
-                    <div className={styles.eduHeader}>
-                      <div className={styles.eduIconWrap}>
-                        <edu.Icon size={20} aria-hidden="true" />
-                      </div>
-                      <div className={styles.eduMeta}>
-                        <h3 className={styles.eduInstitution}>
-                          {edu.institution}
-                        </h3>
-                        <span className={styles.eduPeriod}>{edu.period}</span>
-                      </div>
+                  <div className={styles.eduHeader}>
+                    <div className={styles.eduIconWrap}>
+                      <edu.Icon size={20} aria-hidden="true" />
                     </div>
-                    <span className={styles.eduChevron} aria-hidden="true">
-                      ›
-                    </span>
-                  </button>
-                  <div
-                    className={styles.eduDetail}
-                    id={`edu-detail-${idx}`}
-                    role="region"
-                  >
-                    <div className={styles.eduDetailInner}>
-                      <p className={styles.eduDegree}>{edu.degree}</p>
-                      <p className={styles.eduGpa}>{edu.gpa}</p>
+                    <div className={styles.eduMeta}>
+                      <h3 className={styles.eduInstitution}>
+                        {edu.institution}
+                      </h3>
+                      <span className={styles.eduPeriod}>{edu.period}</span>
                     </div>
                   </div>
+                  <span className={styles.eduChevron} aria-hidden="true">
+                    ›
+                  </span>
+                </button>
+                <div
+                  className={styles.eduDetail}
+                  id={`edu-detail-${idx}`}
+                  role="region"
+                >
+                  <div className={styles.eduDetailInner}>
+                    <p className={styles.eduDegree}>{edu.degree}</p>
+                    <p className={styles.eduGpa}>{edu.gpa}</p>
+                  </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </section>
 
@@ -483,6 +448,20 @@ export default function Home() {
 
         {/* ═══════ FOOTER ═══════ */}
         <footer className={styles.footer}>
+          <div className={styles.footerLinks}>
+            {SOCIAL_LINKS.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.footerLink}
+              >
+                <link.Icon size={16} aria-hidden="true" />
+                <span>{link.name}</span>
+              </a>
+            ))}
+          </div>
           <p className={styles.footerText}>
             © 2026 Yusuf Dwi Saputra. All rights reserved.
           </p>

@@ -5,7 +5,6 @@ import { useTheme } from './ThemeProvider';
 import styles from './Navbar.module.css';
 
 const NAV_ITEMS = [
-  { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
   { label: 'Projects', href: '#projects' },
   { label: 'Education', href: '#education' },
@@ -23,23 +22,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string,
-  ) => {
-    e.preventDefault();
-    setMobileOpen(false);
-
-    if (href === '#hero') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      const target = document.querySelector(href);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
-
   return (
     <nav
       className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}
@@ -47,12 +29,7 @@ export default function Navbar() {
       aria-label="Main navigation"
     >
       <div className={styles.navInner}>
-        <a
-          href="#hero"
-          className={styles.logo}
-          onClick={(e) => handleNavClick(e, '#hero')}
-          aria-label="Scroll to top"
-        >
+        <a href="#" className={styles.logo} aria-label="Scroll to top">
           <span className={styles.logoMark}>Y</span>
           <span className={styles.logoDot} />
         </a>
@@ -64,7 +41,7 @@ export default function Navbar() {
               key={item.label}
               href={item.href}
               className={styles.link}
-              onClick={(e) => handleNavClick(e, item.href)}
+              onClick={() => setMobileOpen(false)}
             >
               {item.label}
             </a>

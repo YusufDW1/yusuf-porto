@@ -158,6 +158,12 @@ button {
   font: inherit;
 }
 
+/* ─── Anchor offset for sticky nav ─── */
+
+section[id] {
+  scroll-margin-top: 72px;
+}
+
 /* ─── Selection ─── */
 
 ::selection {

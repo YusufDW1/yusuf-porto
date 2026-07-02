@@ -1,33 +1,29 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './RoleTyper.module.css';
 
 const ROLES = ['Frontend Developer', 'Game Developer'];
 
 export default function RoleTyper() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
-    timerRef.current = setInterval(() => {
-      setIsVisible(false);
-
+    const timer = setInterval(() => {
+      setAnimating(true);
       setTimeout(() => {
         setActiveIndex((prev) => (prev + 1) % ROLES.length);
-        setIsVisible(true);
-      }, 400);
-    }, 3200);
+        setAnimating(false);
+      }, 450); // matches flipOut animation duration
+    }, 3500);
 
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
+    return () => clearInterval(timer);
   }, []);
 
   return (
-    <span className={styles.roleDisplay}>
-      <span className={`${styles.role} ${isVisible ? styles.visible : styles.hidden}`}>
+    <span className={styles.container}>
+      <span className={`${styles.role} ${animating ? styles.slideOut : styles.slideIn}`}>
         {ROLES[activeIndex]}
       </span>
     </span>

@@ -1,38 +1,47 @@
-.roleDisplay {
+.container {
   display: inline-flex;
+  perspective: 1000px;
+  height: 1.4em;
   align-items: center;
-  min-height: 1.4em;
 }
 
 .role {
+  display: inline-block;
   font-family: var(--font-body);
   font-size: var(--text-lg);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--accent);
-  transition: opacity var(--duration-normal) var(--ease-out),
-    transform var(--duration-normal) var(--ease-out),
-    filter var(--duration-normal) var(--ease-out);
+  letter-spacing: 0.02em;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
-.visible {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
+.slideIn {
+  animation: flipIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.hidden {
-  opacity: 0;
-  transform: translateY(6px);
-  filter: blur(4px);
+.slideOut {
+  animation: flipOut 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .role {
-    transition: none;
+@keyframes flipIn {
+  from {
+    transform: rotateX(-90deg) translateZ(8px);
+    opacity: 0;
   }
+  to {
+    transform: rotateX(0deg) translateZ(0);
+    opacity: 1;
+  }
+}
 
-  .hidden {
-    filter: none;
-    transform: none;
+@keyframes flipOut {
+  from {
+    transform: rotateX(0deg) translateZ(0);
+    opacity: 1;
+  }
+  to {
+    transform: rotateX(90deg) translateZ(8px);
+    opacity: 0;
   }
 }
