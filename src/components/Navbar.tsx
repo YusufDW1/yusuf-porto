@@ -1,30 +1,38 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useTheme } from './ThemeProvider';
-import { FaUser, FaBriefcase, FaCode, FaEnvelope } from 'react-icons/fa';
 import styles from './Navbar.module.css';
 
 const NAV_ITEMS = [
-  { label: 'ABOUT', href: '#about', Icon: FaUser },
-  { label: 'PROJECTS', href: '#projects', Icon: FaBriefcase },
-  { label: 'SKILLS', href: '#skills', Icon: FaCode },
-  { label: 'CONTACT', href: '#contact', Icon: FaEnvelope },
+  { label: 'About', href: '#about' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Education', href: '#education' },
+  { label: 'Contact', href: '#contact' },
 ];
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
     e.preventDefault();
+    setMobileOpen(false);
 
     if (href === '#hero') {
-      // Jika yang diklik adalah logo, paksa scroll ke titik 0 paling atas halaman
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      // Untuk menu navigasi lainnya, scroll ke elemen kontainer masing-masing
       const target = document.querySelector(href);
       if (target) {
         target.scrollIntoView({ behavior: 'smooth' });
@@ -33,22 +41,24 @@ export default function Navbar() {
   };
 
   return (
-    <nav className={styles.nav} id="main-nav">
+    <nav
+      className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}
+      id="main-nav"
+      aria-label="Main navigation"
+    >
       <div className={styles.navInner}>
-        {/* Logo Ikon Y Pixel Art - Kembali ke Paling Atas */}
         <a
           href="#hero"
-          className={styles.logoContainer}
+          className={styles.logo}
           onClick={(e) => handleNavClick(e, '#hero')}
-          aria-label="Scroll to Top"
+          aria-label="Scroll to top"
         >
-          <div className={styles.pixelLogoY}>
-            <div className={styles.gridPixelY} />
-          </div>
+          <span className={styles.logoMark}>Y</span>
+          <span className={styles.logoDot} />
         </a>
 
-        {/* Nav Links */}
-        <div className={styles.links}>
+        {/* Desktop links */}
+        <div className={`${styles.links} ${mobileOpen ? styles.open : ''}`}>
           {NAV_ITEMS.map((item) => (
             <a
               key={item.label}
@@ -56,25 +66,44 @@ export default function Navbar() {
               className={styles.link}
               onClick={(e) => handleNavClick(e, item.href)}
             >
-              <item.Icon size={20} />
-              <span className={styles.linkText}>{item.label}</span>
+              {item.label}
             </a>
           ))}
+        </div>
 
-          {/* Theme Toggle */}
+        <div className={styles.actions}>
           <button
             onClick={toggleTheme}
             className={styles.themeToggle}
-            aria-label="Toggle Theme"
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
             id="theme-toggle"
           >
-            {theme === 'dark' ? '☀' : '☾'}
+            <span className={styles.themeIcon}>
+              {theme === 'dark' ? '☀' : '☾'}
+            </span>
+          </button>
+
+          {/* Mobile hamburger */}
+          <button
+            className={`${styles.hamburger} ${mobileOpen ? styles.hamburgerOpen : ''}`}
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
+          >
+            <span />
+            <span />
+            <span />
           </button>
         </div>
       </div>
 
-      {/* Pixel border bottom */}
-      <div className={styles.borderBottom} />
+      {/* Mobile overlay */}
+      {mobileOpen && (
+        <div
+          className={styles.mobileOverlay}
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
     </nav>
   );
 }

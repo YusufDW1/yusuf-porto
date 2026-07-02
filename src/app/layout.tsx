@@ -1,25 +1,27 @@
 import type { Metadata } from 'next';
-import { Chakra_Petch, JetBrains_Mono } from 'next/font/google';
+import { Sora, Source_Sans_3 } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '../components/ThemeProvider';
+import SmoothScroll from '../components/SmoothScroll';
 
-const chakraPetch = Chakra_Petch({
+const sora = Sora({
   weight: ['400', '600', '700'],
   subsets: ['latin'],
   variable: '--font-heading',
   display: 'swap',
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  weight: ['400', '500', '700'],
+const sourceSans = Source_Sans_3({
+  weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
   variable: '--font-body',
   display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'YUSUF DWI SAPUTRA | Frontend & Game Developer',
-  description: 'Pixel art portfolio of Yusuf Dwi Saputra — Frontend & Game Developer. Building worlds and crafting code.',
+  title: 'Yusuf Dwi Saputra — Frontend & Game Developer',
+  description:
+    'Portfolio of Yusuf Dwi Saputra — Mobile Frontend & Game Developer from Tegal, Indonesia. Building immersive mobile apps and pixel-perfect game worlds.',
 };
 
 export default function RootLayout({
@@ -29,9 +31,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${chakraPetch.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+      <head>
+        <meta name="color-scheme" content="dark light" />
+      </head>
+      <body
+        className={`${sora.variable} ${sourceSans.variable}`}
+        suppressHydrationWarning
+      >
         <ThemeProvider>
-          {children}
+          <SmoothScroll>{children}</SmoothScroll>
         </ThemeProvider>
       </body>
     </html>

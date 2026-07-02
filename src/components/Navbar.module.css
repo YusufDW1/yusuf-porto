@@ -1,168 +1,212 @@
 /* ═══════════════════════════════════════════════════════════
-   NAVBAR STYLES — Pixel Art 8-Bit Dynamic Navigation
+   NAVBAR — Clean sticky nav with backdrop blur on scroll
    ═══════════════════════════════════════════════════════════ */
 
 .nav {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: var(--z-sticky);
   background: var(--bg-primary);
-  transition: background-color 0.3s steps(4);
+  transition: background-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.nav.scrolled {
+  background: oklch(from var(--bg-primary) l c h / 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--border);
 }
 
 .navInner {
-  max-width: 1100px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 16px 24px;
+  padding: var(--space-4) var(--space-6);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: var(--space-6);
 }
 
-/* ─── Logo Container & Pixel Art Logo Y ─── */
-.logoContainer {
+/* ─── Logo ─── */
+
+.logo {
   display: flex;
   align-items: center;
+  gap: 2px;
   text-decoration: none;
   flex-shrink: 0;
 }
 
-.pixelLogoY {
-  position: relative;
-  width: 36px;
-  height: 36px;
-  background-color: var(--bg-panel-alt);
-  border: 2px solid var(--border-pixel);
-  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.1s steps(2), border-color 0.2s ease;
-  cursor: pointer;
+.logoMark {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--text-2xl);
+  color: var(--text-primary);
+  line-height: 1;
+  transition: color var(--duration-fast) var(--ease-out);
 }
 
-/* Menggambar matriks huruf Y simetris berukuran 4px per blok piksel menggunakan box-shadow */
-.gridPixelY {
-  width: 4px;
-  height: 4px;
-  background: var(--accent-gold);
-  position: relative;
-  box-shadow:
-    /* Lengan Kiri Atas */
-    -8px -10px 0 var(--accent-gold), -8px -6px 0 var(--accent-gold), -4px -2px 0 var(--accent-gold),
-    /* Lengan Kanan Atas */
-    8px -10px 0 var(--accent-gold), 8px -6px 0 var(--accent-gold), 4px -2px 0 var(--accent-gold),
-    /* Batang Tengah Bawah */
-    0px -2px 0 var(--accent-gold),
-    0px 2px 0 var(--accent-gold),
-    0px 6px 0 var(--accent-gold),
-    0px 10px 0 var(--accent-gold),
-    /* Efek Kedalaman Dimensi Bayangan (3D Shadow) */
-    -4px 6px 0 rgba(0, 0, 0, 0.15), 4px 2px 0 rgba(0, 0, 0, 0.15);
+.logoDot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  margin-top: auto;
+  margin-bottom: 4px;
+  flex-shrink: 0;
 }
 
-/* Efek Interaktif Hover & Active Khas Game Retro */
-.logoContainer:hover .pixelLogoY {
-  transform: scale(1.05) translateY(-1px);
-  border-color: var(--accent-gold);
-}
-
-.logoContainer:active .pixelLogoY {
-  transform: translateY(1px);
-  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+.logo:hover .logoMark {
+  color: var(--accent);
 }
 
 /* ─── Links ─── */
+
 .links {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-1);
 }
 
 .link {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  font-family: var(--font-pixel);
-  font-size: 8px;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
   color: var(--text-secondary);
   text-decoration: none;
-  letter-spacing: 1px;
-  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
-  border: 2px solid transparent;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  transition: color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
 }
 
 .link:hover {
-  color: var(--accent-gold);
-  background-color: var(--bg-panel);
-  border-color: var(--border-pixel);
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
 }
 
-.linkText {
-  display: inline;
+/* ─── Actions ─── */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
 }
 
-/* ─── Theme Toggle ─── */
 .themeToggle {
-  font-size: 16px;
-  padding: 6px 10px;
-  background: var(--bg-panel);
-  border: 2px solid var(--border-pixel);
-  color: var(--accent-gold);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
   cursor: pointer;
-  font-family: var(--font-pixel);
-  transition: all 0.2s ease;
-  line-height: 1;
+  transition: all var(--duration-fast) var(--ease-out);
 }
 
 .themeToggle:hover {
-  background: var(--border-pixel);
-  border-color: var(--accent-gold);
+  border-color: var(--border-hover);
+  color: var(--accent);
+  background: var(--bg-surface-hover);
 }
 
-/* ─── Border Bottom ─── */
-.borderBottom {
-  height: 4px;
-  background: repeating-linear-gradient(90deg,
-      var(--border-pixel) 0px,
-      var(--border-pixel) 8px,
-      var(--bg-panel) 8px,
-      var(--bg-panel) 16px);
+.themeIcon {
+  font-size: var(--text-lg);
+  line-height: 1;
 }
 
-/* ─── Responsive Breakpoints ─── */
-@media (max-width: 900px) {
+/* ─── Hamburger (mobile only) ─── */
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--text-secondary);
+  border-radius: 1px;
+  transition: all var(--duration-fast) var(--ease-out);
+  transform-origin: center;
+}
+
+.hamburgerOpen span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburgerOpen span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburgerOpen span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ─── Mobile overlay ─── */
+
+.mobileOverlay {
+  display: none;
+}
+
+/* ─── Responsive ─── */
+
+@media (max-width: 640px) {
   .navInner {
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 12px 16px;
-    gap: 12px;
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .hamburger {
+    display: flex;
   }
 
   .links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 4px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 260px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+    padding: var(--space-12) var(--space-6) var(--space-6);
+    background: var(--bg-secondary);
+    border-left: 1px solid var(--border);
+    transform: translateX(100%);
+    transition: transform var(--duration-normal) var(--ease-out);
+    z-index: var(--z-overlay);
+  }
+
+  .links.open {
+    transform: translateX(0);
   }
 
   .link {
-    padding: 6px 8px;
-    font-size: 7px;
-  }
-}
-
-@media (max-width: 600px) {
-  .linkText {
-    display: none;
+    font-size: var(--text-base);
+    padding: var(--space-3) var(--space-4);
+    width: 100%;
+    border-radius: var(--radius-md);
   }
 
-  .link {
-    padding: 8px;
-  }
-
-  .navInner {
-    justify-content: space-between;
+  .mobileOverlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: oklch(0 0 0 / 0.5);
+    z-index: calc(var(--z-overlay) - 1);
   }
 }

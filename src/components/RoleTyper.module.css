@@ -1,21 +1,38 @@
-.typer {
+.roleDisplay {
   display: inline-flex;
   align-items: center;
-  height: 30px;
+  min-height: 1.4em;
 }
 
-.text {
+.role {
   font-family: var(--font-body);
-  font-size: 20px;
-  color: var(--accent-blue-light);
-  line-height: 30px;
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--accent);
+  transition: opacity var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out),
+    filter var(--duration-normal) var(--ease-out);
 }
 
-.cursor {
-  font-family: var(--font-body);
-  font-size: 20px;
-  color: var(--accent-gold);
-  animation: pixel-blink 1s steps(1) infinite;
-  margin-left: 2px;
-  line-height: 30px;
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.hidden {
+  opacity: 0;
+  transform: translateY(6px);
+  filter: blur(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .role {
+    transition: none;
+  }
+
+  .hidden {
+    filter: none;
+    transform: none;
+  }
 }

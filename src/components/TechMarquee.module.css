@@ -1,110 +1,64 @@
-.marqueeContainer {
+/* ═══════════════════════════════════════════════════════════
+   SKILL GRID — Clean responsive grid with icon + label
+   ═══════════════════════════════════════════════════════════ */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: var(--space-3);
+}
+
+.skillItem {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-  padding: 20px 0;
-}
-
-/* Optional fading edges for the marquee */
-.marqueeContainer::before,
-.marqueeContainer::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100px;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.marqueeContainer::before {
-  left: 0;
-  background: linear-gradient(to right, var(--bg-primary), transparent);
-}
-
-.marqueeContainer::after {
-  right: 0;
-  background: linear-gradient(to left, var(--bg-primary), transparent);
-}
-
-.marqueeRow {
-  display: flex;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.marqueeTrack {
-  display: flex;
-  gap: 40px;
   align-items: center;
-  padding: 0 20px;
-}
-
-.skillLink {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 70px;
-  height: 70px;
-  border: 3px solid var(--border-pixel);
-  background: var(--bg-panel);
-  transition: all 0.3s steps(3);
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-3);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
   text-decoration: none;
-  flex-shrink: 0;
-  color: var(--text-primary);
-  box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+  transition: border-color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
 }
 
-.skillLink:hover {
-  border-color: var(--accent-gold);
-  transform: translateY(-5px);
-  background: var(--bg-panel-alt);
-  box-shadow: 4px 9px 0px rgba(0,0,0,0.1);
+.skillItem:hover {
+  border-color: var(--accent);
+  background: var(--bg-surface-hover);
+  box-shadow: 0 0 0 3px var(--accent-muted);
 }
 
-/* Animations */
-@keyframes slideRight {
-  0% {
-    transform: translateX(-33.33%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideLeft {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-33.33%);
-  }
-}
-
-/* Using linear animation for smooth marquee, pixel effect achieved via other means or we can use steps() for true retro but linear is usually better for marquees */
-.slideRight {
-  animation: slideRight 15s linear infinite;
-}
-
-.slideLeft {
-  animation: slideLeft 15s linear infinite;
-}
-
-/* Pause on hover */
-.marqueeRow:hover .marqueeTrack {
-  animation-play-state: paused;
-}
-
-.svgIcon {
+.icon {
   color: var(--text-secondary);
-  transition: all 0.3s ease;
-  filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.2));
+  transition: color var(--duration-fast) var(--ease-out);
+  flex-shrink: 0;
 }
 
-.skillLink:hover .svgIcon {
-  color: var(--accent-gold);
-  filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.4)) drop-shadow(0px 0px 8px color-mix(in srgb, var(--accent-gold) 40%, transparent));
+.skillItem:hover .icon {
+  color: var(--accent);
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--text-muted);
+  text-align: center;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.skillItem:hover .label {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: var(--space-2);
+  }
+
+  .skillItem {
+    padding: var(--space-3) var(--space-2);
+  }
 }
